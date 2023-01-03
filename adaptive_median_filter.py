@@ -20,7 +20,7 @@ def state_A(z_min, z_med, z_max, z_xy, S_xy, S_max):
         return state_B(z_min, z_med, z_max, z_xy, S_xy, S_max)
     else:
         S_xy += 2 #increase the size of S_xy to the next odd value.
-        if(S_xy <= S_max): #repeat process
+        if(S_xy <= S_max):
             return state_A(z_min, z_med, z_max, z_xy, S_xy, S_max)
         else:
             return z_med
@@ -34,7 +34,7 @@ def state_B(z_min, z_med, z_max, z_xy, S_xy, S_max):
 
 
 def adaptive_median_filter(image, initial_window, max_window):
-    """runs the Adaptive Median Filter proess on an image"""
+
     xlength, ylength = image.shape  # get the shape of the image.
 
     z_min, z_med, z_max, z_xy = 0, 0, 0, 0
@@ -59,7 +59,7 @@ def adaptive_median_filter(image, initial_window, max_window):
 
 if __name__ == "__main__":
     # read original image
-    img = cv2.imread("noisyimg.png")
+    img = cv2.imread("corrupted_images/image_1.png")
     # turn image in gray scale value
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -70,4 +70,6 @@ if __name__ == "__main__":
     cv2.imshow("original image", gray)
     output_img = adaptive_median_filter(gray, 3, 19)
     cv2.imshow("output image", output_img)
+    status = cv2.imwrite("restored_images/restored_image_1.png", output_img)
+    print("Image written to file-system : ", status)
     cv2.waitKey(0)
